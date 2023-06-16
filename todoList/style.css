@@ -1,0 +1,56 @@
+h1, h4 {
+    text-shadow: 1px 1px thistle;
+    opacity: 80%;
+    margin: 0 0 10px 0;
+}
+
+input {
+    opacity: 80%;
+}
+
+.todo-container {
+    max-width: 100%;
+    width: 500px;
+}
+
+.todo-input {
+    display: block;
+    font-size: 2rem;
+    padding: 0.5rem 2rem 0.5rem 0.5rem;
+    width: 60%;
+}
+
+.todo-list {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.todo-list li {
+    border-top: 1px solid rgb(242, 242, 242);
+    font-size: 1.5rem;
+}
+
+.complete {
+    color: rgb(155, 155, 155);
+    text-decoration: line-through;
+}
+
+.btn-complete {
+    background-color: green;
+}
+
+li button {
+    background-color: mintcream;
+    width: 1.5rem;
+    height: 1.5rem;
+    margin: 0.5rem;
+    border: 2px solid black;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+li button:active {
+    border: 2px solid gray;
+}
+
