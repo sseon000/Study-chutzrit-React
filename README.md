@@ -7,13 +7,12 @@
 ## \* 배운것
 
 > dom제어, 배열함수, 이벤트연결, 배열에 객체 추가하기!!
-
-<br />
+> <br />
 
 ## 1. 투두리스트
 
 <div align="center">
-    <img src="./src/images/todo_preview.png" width="400px">
+    <img src="./src/images/todo_pview.png" width="400px">
 </div>
 <br />
 
