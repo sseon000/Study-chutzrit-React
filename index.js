@@ -15,14 +15,33 @@ const people = [
 
 // 1. 답
 const rich = people.filter((el) => el.money >= 50000);
-console.log(JSON.stringify(rich));
+//console.log(JSON.stringify(rich));
 
 //2. 돈을 50000원 이상 가진 모든 사람의 이름만 배열에 담아 richNames변수에 할당해 주세요.
 // ['정훈', '선혁']
 
 // 2. 답
 const richNames = people.filter((el) => el.money >= 50000).map((el) => el.name);
-console.log(richNames);
+//console.log(richNames);
+
+/*==================================================================*/
+/*============== 구조분해할당 과제 ==================================*/
+/*==================================================================*/
+
+// 1. Object Destructuring
+// math, history 값을 구조분해 할당으로 추출
+const student = {
+  name: "John",
+  age: 20,
+  grades: {
+    math: 95,
+    science: 87,
+    history: 92,
+  },
+};
+
+// 2. 답
+const { math, history } = student.grades;
 
 /*==================================================================*/
 /*============== 투두리스트 과제 ====================================*/
@@ -39,82 +58,79 @@ const todoBtn = document.querySelector(".todo-btn");
 /*============== add event  =========================================*/
 todoInput.addEventListener("keydown", onPressEnter);
 todoBtn.addEventListener("click", onClickTodoBtn);
+todoUl.addEventListener("dblclick", onDeleteTodo);
 
 /*============== system variables ==================================*/
 let todoContent = "";
 let todoList = [];
 
 /*============== user script =======================================*/
-/** 2023.06.16 KSH
- * todoInput.onkeydown
- * [description] : 할 일을 적고 엔터키를 눌렀을 때, 할 일 추가
- * [params] : none
- */
 function onPressEnter() {
-  //console.log(window.event.keyCode);
-  // 1. todo값 가져오기
-  todoContent = todoInput.value;
-  // 2. 할 일을 적고 엔터키를 눌렀을 때, 할 일 추가
-  if (window.event.keyCode === 13 && !!todoContent.trim()) {
-    createTodo();
-    addTodo();
+  if (window.event.keyCode === 13 && !!todoInput.value.trim()) {
+    onClickTodoBtn();
   }
 }
 
-/** 2023.06.18 KSH
- * todo-btn.onClick
- * [description] : 할 일을 적고 Add 버튼 클릭 시, 할 일 추가
- * [params] : none
- */
 function onClickTodoBtn() {
-  // 1. todo값 가져오기
   todoContent = todoInput.value;
-  // 2. 할 일을 적고 엔터키를 눌렀을 때, 할 일 추가
-  if (todoContent.trim()) {
-    createTodo();
-    addTodo();
-  }
-}
 
-/** 2023.06.18 KSH
- * createTodo
- * [description] : 새로운 할 일 객체 만들기
- * [params] : none
- */
-function createTodo() {
-  // 1. new Todo 객체 생성
   const newItem = {
     id: todoList.length + 1,
     todo: todoContent,
     isComplete: false,
   };
-  // 2. todoList 배열에 newItem 추가
+
   todoList = [...todoList, newItem];
+  listUiUpdate(newItem);
 }
 
-/** 2023.06.16 KSH
- * addTodo
- * [description] : 할 일 추가
- * [params] : none
- */
-function addTodo() {
-  // 1. span, li tag 생성
+function listUiUpdate(newItem) {
   const newSpan = document.createElement("span");
   const newLi = document.createElement("li");
   const newBtn = document.createElement("button");
-  // 2. btn 태그에 클릭 이벤트 연결
-  newBtn.addEventListener("click", () => {
-    //console.log('btn click')
+
+  newBtn.addEventListener("click", (event) => {
     newLi.classList.toggle("complete");
     newBtn.classList.toggle("btn-complete");
+
+    todoList = todoList.map((el) => {
+      // console.log(el);
+      return el.id === Number(event.target.id)
+        ? { ...el, isComplete: !el.isComplete }
+        : el;
+    });
   });
-  // 3. span tag innerText에 할 일 값 할당
-  newSpan.innerText = todoContent;
-  // 4. li tag에 span, button tag 자식 추가
+
+  newBtn.id = newItem.id;
+  newSpan.innerText = newItem.todo;
+
   newLi.appendChild(newBtn);
   newLi.appendChild(newSpan);
-  // 5. ul tag에 span tag 자식 추가
   todoUl.appendChild(newLi);
-  // 6. input value 초기화
   todoInput.value = "";
 }
+
+function onDeleteTodo(event) {
+  // console.dir(event.target.firstChild.id);
+  todoList.filter((el) => {
+    el.id !== Number(event.target.firstChild.id);
+  });
+  event.target.remove();
+}
+
+// 시도하지 않아 후회로 남는것! ㅜ,.ㅜ
+
+/**
+ * 실패의 의미
+ * 1. 새로운 것에 도전했다는 증거
+ * 2. 후회없는 삶을 살았다 증거
+ * 3. 한계를 깨기위한 노력을 했다는 증거
+ */
+
+/**
+ *실패를 대하는 태도 -> 실패를 긍정적으로 받아들이는 태도
+ * 1. 고작 몇번의 부딪힘
+ * 2. 그만큼 의미있는 일
+ * 3. 실패에서 배우기
+ *   3-1. 실패 리포트 -> 도전 이력서
+ */
